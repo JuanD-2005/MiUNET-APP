@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "849685250456",
+    "project_id": "miunet-1dd90",
+    "storage_bucket": "miunet-1dd90.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:849685250456:android:75ea909ca96a6f485dabed",
+        "android_client_info": {
+          "package_name": "com.example.miunet01"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDphF-IMdF1cOwZ1wH3naEh3F-RoHUzMXw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

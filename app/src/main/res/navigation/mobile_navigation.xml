@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/navigation_unet_info">
+
+    <fragment
+        android:id="@+id/navigation_unet_info"
+        android:name="com.example.miunet01.ui.unetinfo.UnetInfoFragment"
+        android:label="UNET Info"
+        tools:layout="@layout/fragment_unetinfo" />
+
+    <fragment
+        android:id="@+id/navigation_chatbot"
+        android:name="com.example.miunet01.ui.chatbot.ChatbotFragment"
+        android:label="Chatbot"
+        tools:layout="@layout/fragment_chatbot" />
+
+    <fragment
+        android:id="@+id/navigation_tramites"
+        android:name="com.example.miunet01.ui.tramites.TramitesFragment"
+        android:label="Trámites"
+        tools:layout="@layout/fragment_tramites" />
+
+    <fragment
+        android:id="@+id/navigation_enlaces"
+        android:name="com.example.miunet01.ui.enlaces.EnlacesFragment"
+        android:label="Enlaces"
+        tools:layout="@layout/fragment_enlaces" />
+
+    <fragment
+        android:id="@+id/navigation_usuario"
+        android:name="com.example.miunet01.ui.usuarios.UsuariosFragment"
+        android:label="Usuario"
+        tools:layout="@layout/fragment_usuarios" />
+</navigation>

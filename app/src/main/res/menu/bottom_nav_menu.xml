@@ -1,0 +1,27 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_unet_info"
+        android:icon="@drawable/ic_unet"
+        android:title="UNET" />
+
+    <item
+        android:id="@+id/navigation_chatbot"
+        android:icon="@drawable/ic_chatbot"
+        android:title="Chatbot" />
+
+    <item
+        android:id="@+id/navigation_tramites"
+        android:icon="@drawable/ic_tramites"
+        android:title="Trámites" />
+
+    <item
+        android:id="@+id/navigation_enlaces"
+        android:icon="@drawable/ic_links"
+        android:title="Enlaces" />
+
+    <item
+        android:id="@+id/navigation_usuario"
+        android:icon="@drawable/ic_usuarios"
+        android:title="Usuario" />
+</menu>

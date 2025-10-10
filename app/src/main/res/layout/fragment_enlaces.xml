@@ -1,44 +1,355 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:fillViewport="true"
+    tools:context=".ui.enlaces.EnlacesFragment">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="🔗 Enlaces de Interés"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:textColor="@color/purple_700"
-            android:layout_marginBottom="12dp"/>
-
-        <Button
-            android:id="@+id/btn_web_unet"
+        <!-- Header UNET (igual que antes) -->
+        <LinearLayout
+            android:id="@+id/header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="🌐 Página Oficial UNET" />
+            android:orientation="vertical"
+            android:background="@color/unet_blue">
 
-        <Button
-            android:id="@+id/btn_web_moodle"
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:background="@color/darkerunet_blue" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="17dp">
+
+                <ImageView
+                    android:src="@drawable/ic_unet_logo"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:contentDescription="Logo UNET" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" ⫹ Ayuda y Links ⫺"
+                    android:textColor="@color/white"
+                    android:textSize="34sp"
+                    android:layout_marginStart="12dp"
+                    android:fontFamily="@font/gummy" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Contenido principal CON MÁS MARGEN INFERIOR -->
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="📘 Moodle UNET"
-            android:layout_marginTop="8dp" />
+            android:padding="20dp"
+            android:paddingBottom="60dp">  <!-- 👈 MÁS PADDING ABAJO -->
 
-        <Button
-            android:id="@+id/btn_web_correo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="📧 Correo Institucional"
-            android:layout_marginTop="8dp" />
+            <!-- Sección: Preguntas Frecuentes -->
+            <TextView
+                android:text="Preguntas Frecuentes"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                android:textColor="@color/darkerunet_blue"
+                android:layout_marginBottom="20dp"
+                android:fontFamily="@font/gummy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <!-- Tus FAQs existentes (FAQ1, FAQ2, FAQ3) -->
+
+            <!-- FAQ 1 -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                app:strokeColor="@color/unet_blue_light"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:id="@+id/faq1">
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:id="@+id/faq1_question"
+                            android:text="¿Qué pasa si voy muy mal en una materia?"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/unet_blue"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
+                        <ImageView
+                            android:id="@+id/faq1_arrow"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_arrow_down"
+                            app:tint="@color/unet_blue" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/faq1_answer"
+                        android:text="No te Preocupes, no es tu culpa, adaptarse a la universidad es dificil, necesitas revisar los procentajes para saber si puedes pasar o en caso de no se posible, ve a control de estudios y retira la materia por un monto dado."
+                        android:textSize="16sp"
+                        android:textColor="@color/dark_gray"
+                        android:layout_marginTop="12dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- FAQ 2 -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                app:strokeColor="@color/unet_blue_light"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:id="@+id/faq2">
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:id="@+id/faq2_question"
+                            android:text="¿Dónde puedo ver el calendario académico?"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/unet_blue"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
+                        <ImageView
+                            android:id="@+id/faq2_arrow"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_arrow_down"
+                            app:tint="@color/unet_blue" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/faq2_answer"
+                        android:text="Puedes acceder al calendario académico desde el portal oficial de la UNET o en la sección de Eventos de esta aplicación."
+                        android:textSize="16sp"
+                        android:textColor="@color/dark_gray"
+                        android:layout_marginTop="12dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- FAQ 3 -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                app:strokeColor="@color/unet_blue_light"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:id="@+id/faq3">
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:id="@+id/faq3_question"
+                            android:text="¿Cómo contacto con los departamentos?"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/unet_blue"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
+                        <ImageView
+                            android:id="@+id/faq3_arrow"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:src="@drawable/ic_arrow_down"
+                            app:tint="@color/unet_blue" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/faq3_answer"
+                        android:text="Puedes acercarte a las oficinas dadas o comunicarte por correo."
+                        android:textSize="16sp"
+                        android:textColor="@color/dark_gray"
+                        android:layout_marginTop="12dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Sección: Enlaces útiles -->
+            <TextView
+                android:text="Enlaces útiles"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                android:textColor="@color/darkerunet_blue"
+                android:layout_marginBottom="16dp"
+                android:fontFamily="@font/gummy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <!-- Tarjeta de enlaces -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="@color/light_gray"
+                android:layout_marginBottom="40dp">  <!-- 👈 MÁS MARGEN ABAJO -->
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp">
+
+                    <!-- Tus botones existentes -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnPortalUNET"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:text="Portal UNET"
+                        android:textSize="16sp"
+                        app:icon="@drawable/ic_web"
+                        app:iconTint="@color/unet_blue"
+                        app:strokeColor="@color/unet_blue"
+                        app:strokeWidth="1dp"
+                        android:textColor="@color/unet_blue" />
+
+                    <!-- ... resto de botones ... -->
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnCorreo"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:text="Aula Virtual"
+                        android:textSize="16sp"
+                        app:icon="@drawable/ic_virtual_class"
+                        app:iconTint="@color/unet_blue"
+                        app:strokeColor="@color/unet_blue"
+                        app:strokeWidth="1dp"
+                        android:textColor="@color/unet_blue" />
+
+                    <!-- Control de Estudios -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnControl"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:text=" Control de Estudios"
+                        android:textSize="16sp"
+                        app:icon="@drawable/ic_study"
+                        app:iconTint="@color/unet_blue"
+                        app:strokeColor="@color/unet_blue"
+                        app:strokeWidth="1dp"
+                        android:textColor="@color/unet_blue" />
+
+                    <!-- Calculadora UNET -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnCalcUNET"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:text=" Calculadora UNET"
+                        android:textSize="16sp"
+                        app:icon="@drawable/ic_calculator"
+                        app:iconTint="@color/unet_blue"
+                        app:strokeColor="@color/unet_blue"
+                        app:strokeWidth="1dp"
+                        android:textColor="@color/unet_blue" />
+
+                    <!-- GeoGebra -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnGeoGebra"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:text=" GeoGebra"
+                        android:textSize="16sp"
+                        app:icon="@drawable/ic_math"
+                        app:iconTint="@color/unet_blue"
+                        app:strokeColor="@color/unet_blue"
+                        app:strokeWidth="1dp"
+                        android:textColor="@color/unet_blue" />
+
+
+
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ESPACIO EXTRA PARA GARANTIZAR SCROLL -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="50dp" />
+
+        </LinearLayout>
 
     </LinearLayout>
-</ScrollView>
+</androidx.core.widget.NestedScrollView>

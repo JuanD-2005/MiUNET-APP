@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:padding="20dp"
+    android:fillViewport="true">
 
     <LinearLayout
         android:orientation="vertical"
@@ -12,58 +13,213 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal">
 
+        <!-- Encabezado con ícono -->
         <ImageView
-            android:id="@+id/user_avatar"
-            android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:src="@android:drawable/ic_menu_myplaces"
-            android:layout_marginBottom="8dp"/>
+            android:src="@drawable/ic_usuarios"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="16dp"
+            app:tint="@color/unet_blue" />
 
         <TextView
-            android:id="@+id/tv_user_name"
+            android:text="Mi Perfil"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="@color/darkerunet_blue"
+            android:layout_marginBottom="24dp"
+            android:fontFamily="@font/gummy"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Juan Paredes"
-            android:textSize="20sp"
-            android:textStyle="bold"/>
+            android:layout_height="wrap_content" />
 
-        <TextView
-            android:id="@+id/tv_user_career"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Ingeniería Informática"
-            android:textColor="@color/black"
-            android:layout_marginBottom="16dp"/>
-
-        <androidx.cardview.widget.CardView
+        <!-- Tarjeta de información del usuario -->
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="3dp">
+            android:layout_marginBottom="24dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp"
+            app:strokeColor="@color/unet_blue_light"
+            app:strokeWidth="1dp">
 
             <LinearLayout
                 android:orientation="vertical"
-                android:padding="16dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:padding="20dp">
 
-                <TextView
-                    android:text="📝 Apuntes Personales"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:textSize="18sp"/>
-
-                <EditText
-                    android:id="@+id/et_user_notes"
+                <!-- Correo electrónico -->
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="150dp"
-                    android:hint="Escribe tus apuntes o recordatorios aquí..."
-                    android:gravity="top"
-                    android:layout_marginTop="8dp"
-                    android:background="@android:drawable/editbox_background_normal" />
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="16dp">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_email"
+                        app:tint="@color/unet_blue"
+                        android:layout_marginEnd="12dp" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:text="Correo electrónico"
+                            android:textSize="12sp"
+                            android:textColor="@color/unet_blue_light"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:id="@+id/tvUserEmail"
+                            android:text="usuario@unet.edu.ve"
+                            android:textSize="16sp"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Rol del usuario -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_role"
+                        app:tint="@color/unet_blue"
+                        android:layout_marginEnd="12dp" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:text="Rol de Usuario"
+                            android:textSize="12sp"
+                            android:textColor="@color/unet_blue_light"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:id="@+id/tvUserRole"
+                            android:text="Estudiante"
+                            android:textSize="16sp"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                </LinearLayout>
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Botones de acción -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="@color/light_gray"
+            android:layout_marginBottom="24dp">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp">
+
+                <!-- Cambiar Contraseña -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnCambiarContrasena"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="Cambiar Contraseña"
+                    android:textSize="16sp"
+                    app:icon="@drawable/ic_password"
+                    app:iconTint="@color/unet_blue"
+                    app:strokeColor="@color/unet_blue"
+                    app:strokeWidth="1dp"
+                    android:textColor="@color/unet_blue" />
+
+                <!-- Ayuda y Soporte -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnAyuda"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="Ayuda y Soporte"
+                    android:textSize="16sp"
+                    app:icon="@drawable/ic_help"
+                    app:iconTint="@color/unet_blue"
+                    app:strokeColor="@color/unet_blue"
+                    app:strokeWidth="1dp"
+                    android:textColor="@color/unet_blue" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Botones de acción crítica -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="@color/light_red"
+            android:layout_marginBottom="24dp">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp">
+
+                <!-- Cerrar Sesión -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnCerrarSesion"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="Cerrar Sesión"
+                    android:textSize="16sp"
+                    app:icon="@drawable/ic_logout"
+                    app:iconTint="@color/red"
+                    app:strokeColor="@color/red"
+                    app:strokeWidth="1dp"
+                    android:textColor="@color/red" />
+
+                <!-- Eliminar Cuenta -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnEliminarCuenta"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:text="Eliminar Cuenta"
+                    android:textSize="16sp"
+                    app:icon="@drawable/ic_delete"
+                    app:iconTint="@color/holo_red_dark"
+                    app:strokeColor="@color/holo_red_dark"
+                    app:strokeWidth="1dp"
+                    android:textColor="@color/holo_red_dark" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>
-</ScrollView>
+</androidx.core.widget.NestedScrollView>

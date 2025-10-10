@@ -9,7 +9,7 @@
         android:id="@+id/navigation_unet_info"
         android:name="com.example.miunet01.ui.unetinfo.UnetInfoFragment"
         android:label="UNET Info"
-        tools:layout="@layout/fragment_unetinfo" />
+        tools:layout="@layout/fragment_unet_info" />
 
     <fragment
         android:id="@+id/navigation_chatbot"

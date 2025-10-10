@@ -1,79 +1,380 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:padding="16dp">
+    android:background="@color/white">
 
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:background="@color/white">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="💼 Procesos Administrativos"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:textColor="@color/purple_700"
-            android:layout_marginBottom="12dp"/>
-
-        <androidx.cardview.widget.CardView
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="3dp">
+            android:layout_height="wrap_content">
 
+            <!-- Header -->
             <LinearLayout
+                android:id="@+id/header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:background="@color/unet_blue"
+                android:elevation="8dp">
 
-                <TextView
-                    android:text="📜 Constancia de Estudio"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:textSize="18sp"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="24dp"
+                    android:background="@color/darkerunet_blue" />
 
-                <TextView
-                    android:text="Costo: 2 USD - Solicitud y pago en línea"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"/>
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:padding="17dp">
+
+                    <ImageView
+                        android:src="@drawable/ic_unet_logo"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:contentDescription="Logo UNET" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" ⫹ Trámites ⫺ "
+                        android:textColor="@color/white"
+                        android:textSize="34sp"
+                        android:layout_marginStart="12dp"
+                        android:fontFamily="@font/gummy" />
+
+                    <!-- Floating Action Button para agregar contenido -->
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/btnAgregar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end|bottom"
+                        android:layout_margin="0dp"
+                        android:src="@drawable/ic_add"
+                        app:backgroundTint="@color/unet_blue"
+                        app:tint="@android:color/white"
+                        app:elevation="12dp"
+                        app:rippleColor="@color/unet_blue_light"
+                        app:borderWidth="0dp"
+                        app:maxImageSize="24dp" />
+
+
+                </LinearLayout>
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="3dp">
-
+            <!-- Contenido de Trámites y Servicios -->
             <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:orientation="vertical">
+                android:padding="16dp">
 
-                <TextView
-                    android:text="📑 Certificación de Notas"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:textSize="18sp"/>
-
-                <TextView
-                    android:text="Costo: 5 USD - Entrega en 3 días hábiles"
+                <!-- 🔹 Sección: Departamentos (Colapsable) -->
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"/>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/bg_section_header"
+                    android:padding="10dp"
+                    android:layout_marginBottom="12dp"
+                    android:elevation="3dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:id="@+id/headerDepartamentos">
 
-    </LinearLayout>
-</ScrollView>
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/ic_departamento"
+                        app:tint="@color/white"
+                        android:contentDescription="Icono departamentos" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text=" Departamentos"
+                        android:textColor="@color/white"
+                        android:textSize="22sp"
+                        android:fontFamily="@font/gummy"
+                        android:textStyle="bold"
+                        android:layout_marginStart="8dp" />
+
+                    <ImageView
+                        android:id="@+id/arrowDepartamentos"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_arrow_down"
+                        app:tint="@color/white" />
+
+                </LinearLayout>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardDepartamentos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    app:cardCornerRadius="14dp"
+                    app:cardElevation="4dp"
+                    app:cardBackgroundColor="@color/light_gray">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerDepartamentos"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:clipToPadding="false" />
+                </androidx.cardview.widget.CardView>
+
+                <!-- 🔹 Sección: Trámites y Servicios (Colapsable) -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/bg_section_header"
+                    android:padding="10dp"
+                    android:layout_marginBottom="12dp"
+                    android:elevation="3dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:id="@+id/headerServicios">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/ic_servicios"
+                        app:tint="@color/white"
+                        android:contentDescription="Icono servicios" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text=" Trámites"
+                        android:textColor="@color/white"
+                        android:textSize="22sp"
+                        android:fontFamily="@font/gummy"
+                        android:textStyle="bold"
+                        android:layout_marginStart="8dp" />
+
+                    <ImageView
+                        android:id="@+id/arrowServicios"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_arrow_down"
+                        app:tint="@color/white" />
+                </LinearLayout>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardServicios"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="14dp"
+                    app:cardElevation="4dp"
+                    app:cardBackgroundColor="@color/light_gray"
+                    android:layout_marginBottom="20dp">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerServicios"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:clipToPadding="false" />
+                </androidx.cardview.widget.CardView>
+
+                <!-- 🔹 Sección: Autoridades Universitarias (Colapsable) -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/bg_section_header"
+                    android:padding="10dp"
+                    android:layout_marginBottom="12dp"
+                    android:elevation="3dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:id="@+id/headerAutoridades">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/ic_autoridades"
+                        app:tint="@color/white"
+                        android:contentDescription="Icono autoridades" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text=" Autoridades"
+                        android:textColor="@color/white"
+                        android:textSize="22sp"
+                        android:fontFamily="@font/gummy"
+                        android:textStyle="bold"
+                        android:layout_marginStart="8dp" />
+
+                    <ImageView
+                        android:id="@+id/arrowAutoridades"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_arrow_up"
+                        app:tint="@color/white" />
+                </LinearLayout>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardAutoridades"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="14dp"
+                    app:cardElevation="4dp"
+                    app:cardBackgroundColor="@color/light_gray"
+                    android:layout_marginBottom="20dp"
+                    android:visibility="gone">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerAutoridades"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:clipToPadding="false"
+                        android:nestedScrollingEnabled="false" />
+                </androidx.cardview.widget.CardView>
+
+                <!-- 🔹 Sección: Decanatos (Colapsable) -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/bg_section_header"
+                    android:padding="10dp"
+                    android:layout_marginBottom="12dp"
+                    android:elevation="3dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:id="@+id/headerDecanatos">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/ic_decanatos"
+                        app:tint="@color/white"
+                        android:contentDescription="Icono decanatos" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text=" Decanatos"
+                        android:textColor="@color/white"
+                        android:textSize="22sp"
+                        android:fontFamily="@font/gummy"
+                        android:textStyle="bold"
+                        android:layout_marginStart="8dp" />
+
+                    <ImageView
+                        android:id="@+id/arrowDecanatos"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_arrow_up"
+                        app:tint="@color/white" />
+                </LinearLayout>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardDecanatos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="14dp"
+                    app:cardElevation="4dp"
+                    app:cardBackgroundColor="@color/light_gray"
+                    android:layout_marginBottom="20dp"
+                    android:visibility="gone">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerDecanatos"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:clipToPadding="false"
+                        android:nestedScrollingEnabled="false" />
+                </androidx.cardview.widget.CardView>
+
+                <!-- 🔹 Sección: Zonas de Interés Universitario (Colapsable) -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/bg_section_header"
+                    android:padding="10dp"
+                    android:layout_marginBottom="12dp"
+                    android:elevation="3dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:id="@+id/headerInteres">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/ic_interes"
+                        app:tint="@color/white"
+                        android:contentDescription="Icono zonas interés" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text=" Zonas de Interés"
+                        android:textColor="@color/white"
+                        android:textSize="22sp"
+                        android:fontFamily="@font/gummy"
+                        android:textStyle="bold"
+                        android:layout_marginStart="8dp" />
+
+                    <ImageView
+                        android:id="@+id/arrowInteres"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_arrow_up"
+                        app:tint="@color/white" />
+                </LinearLayout>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardInteres"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="14dp"
+                    app:cardElevation="4dp"
+                    app:cardBackgroundColor="@color/light_gray"
+                    android:layout_marginBottom="16dp"
+                    android:visibility="gone">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerInteres"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
+                        android:clipToPadding="false"
+                        android:nestedScrollingEnabled="false" />
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

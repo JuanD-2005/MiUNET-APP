@@ -11,15 +11,16 @@ import com.google.firebase.ktx.initialize
 class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Firebase.initialize(this)
+
         val currentUser = FirebaseAuth.getInstance().currentUser
-        if (currentUser != null) {
-            // Usuario logueado → va a Main
-            startActivity(Intent(this, MainActivity::class.java))
+        val intent = if (currentUser != null) {
+            Intent(this, LoginActivity::class.java)
         } else {
-            // No logueado → va a Login
-            startActivity(Intent(this, LoginActivity::class.java))
+            Intent(this, LoginActivity::class.java)
         }
+
+        startActivity(intent)
         finish()
     }
 }
+

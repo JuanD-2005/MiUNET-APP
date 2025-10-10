@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     id("com.google.gms.google-services")
+
 }
 
 android {
@@ -64,6 +65,6 @@ dependencies {
 
     //Firebase Bill of Materials (BOM) - maneja versiones automáticamente
     implementation("com.google.android.material:material:1.12.0")
-
+    implementation("com.google.firebase:firebase-auth:22.3.0")
 
 }

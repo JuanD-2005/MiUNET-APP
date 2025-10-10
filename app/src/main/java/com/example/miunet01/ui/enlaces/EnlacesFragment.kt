@@ -6,45 +6,101 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
+import android.view.animation.AnimationUtils
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.miunet01.R
-import android.widget.Toast
+import com.example.miunet01.databinding.FragmentEnlacesBinding
 
 class EnlacesFragment : Fragment() {
 
+    private var _binding: FragmentEnlacesBinding? = null
+    private val binding get() = _binding!!
+
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val root = inflater.inflate(R.layout.fragment_enlaces, container, false)
+    ): View {
+        _binding = FragmentEnlacesBinding.inflate(inflater, container, false)
 
-        // Referencias a los botones
-        val btnWebUnet: Button = root.findViewById(R.id.btn_web_unet)
-        val btnMoodle: Button = root.findViewById(R.id.btn_web_moodle)
-        val btnCorreo: Button = root.findViewById(R.id.btn_web_correo)
+        setupFAQExpandable()
+        setupButtonListeners()
 
-        // Abrir página oficial de la UNET
-        btnWebUnet.setOnClickListener {
-            abrirEnlace("https://www.unet.edu.ve/")
-        }
-
-        // Abrir Moodle UNET
-        btnMoodle.setOnClickListener {
-            abrirEnlace("https://moodle.unet.edu.ve/")
-        }
-
-        // Abrir Correo Institucional
-        btnCorreo.setOnClickListener {
-            abrirEnlace("https://correo.unet.edu.ve/")
-        }
-
-        return root
+        return binding.root
     }
 
-    // Función auxiliar para abrir URLs
-    private fun abrirEnlace(url: String) {
+    private fun setupFAQExpandable() {
+        // FAQ 1
+        setupFAQItem(
+            container = binding.faq1,
+            answer = binding.faq1Answer,
+            arrow = binding.faq1Arrow
+        )
+
+        // FAQ 2
+        setupFAQItem(
+            container = binding.faq2,
+            answer = binding.faq2Answer,
+            arrow = binding.faq2Arrow
+        )
+
+        // FAQ 3 (si existe en tu layout)
+        setupFAQItem(
+            container = binding.faq3,
+            answer = binding.faq3Answer,
+            arrow = binding.faq3Arrow
+        )
+    }
+
+    private fun setupFAQItem(
+        container: View,
+        answer: View,
+        arrow: View
+    ) {
+        var isExpanded = false
+
+        container.setOnClickListener {
+            isExpanded = !isExpanded
+
+            if (isExpanded) {
+                // Expandir
+                answer.visibility = View.VISIBLE
+                arrow.rotation = 180f
+
+                // Animación suave
+                val animation = AnimationUtils.loadAnimation(requireContext(), android.R.anim.fade_in)
+                answer.startAnimation(animation)
+            } else {
+                // Colapsar
+                answer.visibility = View.GONE
+                arrow.rotation = 0f
+            }
+        }
+    }
+
+    private fun setupButtonListeners() {
+        binding.btnPortalUNET.setOnClickListener {
+            openUrl("https://www.unet.edu.ve")
+        }
+
+        binding.btnCorreo.setOnClickListener {
+            openUrl("https://correo.unet.edu.ve")
+        }
+
+        binding.btnControl.setOnClickListener {
+            openUrl("https://control.unet.edu.ve/")
+        }
+
+        binding.btnCalcUNET.setOnClickListener {
+            openPlayStore("com.dylan_roman.calculadora_unet")
+        }
+
+        binding.btnGeoGebra.setOnClickListener {
+            openPlayStore("org.geogebra.android")
+        }
+    }
+
+    private fun openUrl(url: String) {
         try {
             val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
             startActivity(Intent.createChooser(browserIntent, "Abrir con"))
@@ -53,4 +109,18 @@ class EnlacesFragment : Fragment() {
         }
     }
 
+    private fun openPlayStore(packageName: String) {
+        try {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$packageName"))
+            startActivity(intent)
+        } catch (e: Exception) {
+            // Si Play Store no está disponible, abrir en navegador
+            openUrl("https://play.google.com/store/apps/details?id=$packageName")
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

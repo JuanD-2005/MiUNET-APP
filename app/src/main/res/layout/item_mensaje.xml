@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/messageContainer"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingHorizontal="8dp"
+    android:paddingVertical="4dp">
+
+    <!-- Espacio izquierdo para mensajes del bot -->
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <!-- Mensaje con ancho flexible -->
+    <TextView
+        android:id="@+id/txtMensaje"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="6"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="12dp"
+        android:text="Este es un mensaje de ejemplo."
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:background="@drawable/bg_mensaje_bot" />
+
+    <!-- Espacio derecho para mensajes del usuario -->
+    <View
+        android:id="@+id/rightSpace"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+</LinearLayout>

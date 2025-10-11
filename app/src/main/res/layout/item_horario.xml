@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:backgroundTint="@color/white"
+    android:elevation="8dp"
+    app:cardCornerRadius="16dp"
+    app:strokeColor="@color/unet_blue"
+    app:strokeWidth="3dp"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- 🔹 Nombre del departamento -->
+        <TextView
+            android:id="@+id/txt_departamento"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Departamento de Ingeniería Electrónica"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:textColor="@color/darkerunet_blue"
+            android:fontFamily="@font/gummy"
+            android:layout_marginBottom="8dp"
+            android:paddingStart="15dp" />
+
+        <!-- 🔹 Día -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="2dp">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="22dp"
+                android:src="@drawable/ic_calendar"
+                app:tint="@color/unet_blue"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:id="@+id/txt_dia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lunes a Viernes"
+                android:textSize="14sp"
+                android:textColor="@color/unet_blue" />
+        </LinearLayout>
+
+        <!-- 🔹 Horario -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="4dp">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="22dp"
+                android:src="@drawable/ic_clock"
+                app:tint="@color/unet_blue"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:id="@+id/txt_horario"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="8:00 a.m. - 4:00 p.m."
+                android:textSize="14sp"
+                android:textColor="@color/unet_blue" />
+        </LinearLayout>
+
+        <!-- 🔹 Ubicación -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="4dp">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="22dp"
+                android:src="@drawable/ic_location"
+                app:tint="@color/unet_blue"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:id="@+id/txt_ubicacion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Edificio A, Planta Baja"
+                android:textSize="14sp"
+                android:textColor="@color/unet_blue" />
+        </LinearLayout>
+
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

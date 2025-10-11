@@ -99,6 +99,7 @@
                     android:background="@color/light_gray"
                     android:paddingHorizontal="8dp"
                     android:paddingVertical="4dp"
+
                     android:clipToPadding="false" />
 
                 <!-- Área de entrada de mensajes -->
@@ -107,32 +108,34 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
-                    android:layout_marginTop="8dp">
+                    android:layout_marginTop="8dp"
+                    android:padding="8dp">
 
                     <!-- Campo de entrada de mensaje -->
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:hint="Escribe tu pregunta..."
                         app:boxCornerRadiusBottomEnd="12dp"
+
                         app:boxCornerRadiusBottomStart="12dp"
                         app:boxCornerRadiusTopEnd="12dp"
                         app:boxCornerRadiusTopStart="12dp"
                         app:boxStrokeColor="@color/unet_blue"
                         app:startIconDrawable="@drawable/ic_message"
-                        app:startIconTint="@color/unet_blue"
-                        android:layout_marginEnd="12dp">
+                        app:startIconTint="@color/unet_blue">
 
-                        <com.google.android.material.textfield.TextInputEditText
+                        <AutoCompleteTextView
                             android:id="@+id/inputMensaje"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Escribe tu pregunta..."
-                            android:textColor="@color/black"
-                            android:paddingStart="40dp"
-                            android:textColorHint="@color/gray"
-                            android:maxLines="3" />
-
+                            android:paddingStart="50dp"
+                            android:minHeight="35dp"
+                            android:inputType="text"
+                            android:imeOptions="actionSend"
+                            android:textSize="16sp"
+                            android:padding="8dp" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <!-- Botón de enviar -->
@@ -141,13 +144,16 @@
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         app:icon="@drawable/ic_send"
+
                         app:iconTint="@color/white"
                         app:backgroundTint="@color/unet_blue"
                         app:cornerRadius="30dp"
                         android:elevation="4dp"
-                        style="@style/Widget.Material3.Button.Icon" />
+                        style="@style/Widget.MaterialComponents.Button.Icon"
+                        />
 
                 </LinearLayout>
+
 
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -160,13 +166,13 @@
             android:textColor="@color/gray"
             android:textSize="14sp"
             android:gravity="center"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="0dp"
             android:padding="8dp" />
 
         <!-- Espacio reducido para scroll -->
         <View
             android:layout_width="match_parent"
-            android:layout_height="20dp" />
+            android:layout_height="10dp" />
 
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

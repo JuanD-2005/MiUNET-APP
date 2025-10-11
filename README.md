@@ -52,6 +52,7 @@ Cada fragmento representa una sección funcional del sistema:
 ---
 
 ## 📂 Estructura del Proyecto
+```
 MiUNET/
 ├── app/
 │ ├── src/
@@ -72,8 +73,7 @@ MiUNET/
 │ └── ...
 ├── gradle/
 └── README.md
-
-
+```
 ---
 
 ## 🧪 Tecnologías Utilizadas

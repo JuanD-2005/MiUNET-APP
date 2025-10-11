@@ -1,50 +1,97 @@
-# MiUNET - Plataforma Integral Universitaria
+# 📱 MiUNET-APP
 
-**MiUNET** es un proyecto innovador de la **Universidad Nacional Experimental del Táchira (UNET)** diseñado para mejorar la experiencia académica y administrativa de toda la comunidad universitaria. Esta plataforma centraliza información, integra herramientas inteligentes y facilita la interacción entre estudiantes, profesores y personal administrativo.
+**Plataforma Integral Universitaria - UNET**
 
----
-
-## 🎯 Objetivo General
-
-Desarrollar una aplicación dinámica que integre un **chatbot académico inteligente**, gestión de información institucional y herramientas de apoyo, optimizando la experiencia educativa y administrativa en la UNET.
+MiUNET es una aplicación móvil desarrollada en **Kotlin (Android Studio)** que busca centralizar la información universitaria de la **Universidad Nacional Experimental del Táchira (UNET)**, mejorando la comunicación entre estudiantes, profesores y departamentos a través de un entorno moderno, intuitivo y escalable.
 
 ---
 
-## ✨ Características Principales
+## 🌐 Descripción General
 
-- **Chatbot Inteligente:** Responde en tiempo real a dudas académicas y administrativas.  
-- **Gestión Académica:** Acceso centralizado a horarios, evaluaciones y eventos.  
-- **Notificaciones:** Alertas personalizadas para recordatorios importantes.  
-- **Seguridad y Escalabilidad:** Infraestructura robusta que garantiza protección de datos y confiabilidad.
+Actualmente, los estudiantes de la UNET enfrentan dificultades para acceder a información actualizada sobre trámites, horarios, eventos y servicios universitarios.  
+Esta aplicación surge como una **solución tecnológica integral**, combinando una arquitectura basada en **Firebase** y una interfaz moderna bajo **Material Design 3**.
 
 ---
 
-## 🏗 Objetivos Específicos
+## 🚀 Funcionalidades Principales
 
-1. Autenticación diferenciada para estudiantes, docentes y administrativos.  
-2. Repositorio centralizado de información académica.  
-3. Interfaz amigable y accesible en dispositivos móviles.  
-4. Integración de un asistente virtual inteligente.  
-5. Garantizar seguridad y eficiencia en la gestión de información.
-
----
-
-## 📅 Cronograma de Actividades
-
-- **Fase 1: Planificación (Semanas 1)** – Definición de alcance, estudio de factibilidad, elaboración del cronograma y asignación de recursos.  
-- **Fase 2: Desarrollo (Semanas 2-4)** – Diseño de interfaz, programación de módulos, integración de servicios y seguridad.  
-- **Fase 3: Pruebas (Semanas 5)** – Pruebas unitarias, de integración, usabilidad y rendimiento.  
-- **Fase 4: Implementación (Posterior)** – Despliegue, capacitación, monitoreo y soporte.
+- 🔐 **Autenticación con roles (Firebase Auth)**
+  - Estudiantes, Profesores y Administradores con permisos diferenciados.
+- 🤖 **Chatbot académico**
+  - Asistente virtual integrado para responder preguntas frecuentes.
+- 🗓️ **Gestión de información**
+  - Visualización de eventos, horarios y trámites.
+- 🧩 **Firebase Cloud Firestore**
+  - Base de datos en tiempo real para mantener la información actualizada.
+- 🖥️ **Diseño basado en Material Design**
+  - Interfaz amigable, moderna y adaptativa.
+- 🧑‍💻 **Módulo de administración**
+  - Permite editar la información institucional directamente desde la app.
 
 ---
 
-## 🏫 Motivación del Proyecto
+## 🏗️ Arquitectura del Sistema
 
-La iniciativa surge de la necesidad de **centralizar información académica y administrativa**, mejorar la comunicación institucional y optimizar los procesos internos, reduciendo la fragmentación y la desactualización de datos.
+**Arquitectura Cliente - Servidor:**
+- **Cliente:** Aplicación Android desarrollada en Kotlin.
+- **Servidor:** Firebase (Firestore, Auth, Storage).
+
+MiUNET App (Cliente Android)
+↓ ↑
+Firebase Cloud Firestore
+↓ ↑
+Usuarios / Datos Institucionales
+
+📘 *Estructura modular:*  
+Cada fragmento representa una sección funcional del sistema:
+- `UnetInfoFragment` → Departamentos, servicios y eventos.  
+- `TramitesFragment` → Trámites y precios administrativos.  
+- `ChatbotFragment` → Asistente virtual UNET.  
+- `UsuarioFragment` → Perfil y configuración.  
 
 ---
 
-## 👨‍💻 Autor
+## 📂 Estructura del Proyecto
+MiUNET/
+├── app/
+│ ├── src/
+│ │ ├── main/
+│ │ │ ├── java/com/example/miunet01/
+│ │ │ │ ├── ui/
+│ │ │ │ │ ├── chatbot/
+│ │ │ │ │ ├── login/
+│ │ │ │ │ ├── tramites/
+│ │ │ │ │ └── unetinfo/
+│ │ │ ├── res/
+│ │ │ │ ├── layout/
+│ │ │ │ ├── drawable/
+│ │ │ │ ├── menu/
+│ │ │ │ └── values/
+│ ├── build.gradle
+│ ├── AndroidManifest.xml
+│ └── ...
+├── gradle/
+└── README.md
 
-**Juan Paredes** – Estudiante de Ingeniería Informática, UNET  
-Proyecto desarrollado en el marco de **Sistemas de Información I**
+
+---
+
+## 🧪 Tecnologías Utilizadas
+
+| Tipo | Herramienta / Tecnología |
+|------|--------------------------|
+| Lenguaje | Kotlin |
+| IDE | Android Studio |
+| Base de Datos | Firebase Cloud Firestore |
+| Autenticación | Firebase Auth |
+| UI | Material Design 3 |
+| Arquitectura | Cliente-Servidor |
+| Control de Versiones | Git / GitHub |
+
+---
+
+## ⚙️ Instalación
+
+1. Clona el repositorio:
+   ```bash
+   git clone https://github.com/JuanD-2005/MiUNET.git

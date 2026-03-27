@@ -15,11 +15,12 @@
 
 ## 🌍 Tabla de contenido | Table of contents
 
-- [Español](#español)
-- [English](#english)
+- [Español](#es)
+- [English](#en)
 
 ---
 
+<a id="es"></a>
 ## 🇪🇸 Español
 
 ### 📝 Resumen del proyecto
@@ -102,6 +103,7 @@ git clone https://github.com/JuanD-2005/MiUNET.git
 
 ---
 
+<a id="en"></a>
 ## 🇺🇸 English
 
 ### 📝 Project summary

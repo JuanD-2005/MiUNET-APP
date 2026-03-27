@@ -6,7 +6,7 @@
   <h1>📱 MiUNET App</h1>
   <p><strong>Plataforma integral universitaria para la UNET</strong></p>
 
-  <a href="https://juand-2005.github.io/MiUNET/ target="_blank">
+  <a href="https://juand-2005.github.io/MiUNET/" target="_blank" rel="noopener noreferrer">
     <img src="https://img.shields.io/badge/⬇️_Descargar_APK-000000?style=for-the-badge&logo=android&logoColor=3DDC84" alt="Descargar APK" />
   </a>
 </div>

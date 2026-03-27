@@ -30,10 +30,10 @@ MiUNET es una aplicación nativa Android diseñada para centralizar la informaci
 
 | Vista | Captura |
 |---|---|
-| **Pantalla de login** | ![Login](docs/media/login-screen.jpeg) |
-| **Dashboard principal** | ![Dashboard](docs/media/home-screen.jpeg) |
-| **Módulo de trámites** | ![Tramites](docs/media/tramites-screen.jpeg) |
-| **Chatbot inteligente** | ![Chatbot GIF](docs/media/chatbot-demo.gif) |
+| **Pantalla de login** | <img src="docs/media/login-screen.jpeg" alt="Login" width="220" /> |
+| **Dashboard principal** | <img src="docs/media/home-screen.jpeg" alt="Dashboard" width="220" /> |
+| **Módulo de trámites** | <img src="docs/media/tramites-screen.jpeg" alt="Tramites" width="220" /> |
+| **Chatbot inteligente** | <img src="docs/media/chatbot-demo.gif" alt="Chatbot GIF" width="220" /> |
 
 ### 🔐 Funcionalidades por rol
 
@@ -112,10 +112,10 @@ MiUNET is a native Android application designed to centralize academic and insti
 
 | View | Asset |
 |---|---|
-| **Login screen** | ![Login](docs/media/login-screen.jpeg) |
-| **Main dashboard** | ![Dashboard](docs/media/home-screen.jpeg) |
-| **Procedures module** | ![Procedures](docs/media/tramites-screen.jpeg) |
-| **Chatbot in action** | ![Chatbot GIF](docs/media/chatbot-demo.gif) |
+| **Login screen** | <img src="docs/media/login-screen.jpeg" alt="Login" width="220" /> |
+| **Main dashboard** | <img src="docs/media/home-screen.jpeg" alt="Dashboard" width="220" /> |
+| **Procedures module** | <img src="docs/media/tramites-screen.jpeg" alt="Procedures" width="220" /> |
+| **Chatbot in action** | <img src="docs/media/chatbot-demo.gif" alt="Chatbot GIF" width="220" /> |
 
 ### 🔐 Features by role
 

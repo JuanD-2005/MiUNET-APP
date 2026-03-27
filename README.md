@@ -6,7 +6,7 @@
   <h1>📱 MiUNET App</h1>
   <p><strong>Plataforma integral universitaria para la UNET</strong></p>
 
-  <a href="[ENLACE_DESCARGA_APK]" target="_blank">
+  <a href="https://juand-2005.github.io/MiUNET/ target="_blank">
     <img src="https://img.shields.io/badge/⬇️_Descargar_APK-000000?style=for-the-badge&logo=android&logoColor=3DDC84" alt="Descargar APK" />
   </a>
 </div>
@@ -30,9 +30,9 @@ MiUNET es una aplicación nativa Android diseñada para centralizar la informaci
 
 | Vista | Captura |
 |---|---|
-| **Pantalla de login** | ![Login](docs/media/login-screen.png) |
-| **Dashboard principal** | ![Dashboard](docs/media/home-screen.png) |
-| **Módulo de trámites** | ![Tramites](docs/media/tramites-screen.png) |
+| **Pantalla de login** | ![Login](docs/media/login-screen.jpeg) |
+| **Dashboard principal** | ![Dashboard](docs/media/home-screen.jpeg) |
+| **Módulo de trámites** | ![Tramites](docs/media/tramites-screen.jpeg) |
 | **Chatbot inteligente** | ![Chatbot GIF](docs/media/chatbot-demo.gif) |
 
 ### 🔐 Funcionalidades por rol
@@ -112,9 +112,9 @@ MiUNET is a native Android application designed to centralize academic and insti
 
 | View | Asset |
 |---|---|
-| **Login screen** | ![Login](docs/media/login-screen.png) |
-| **Main dashboard** | ![Dashboard](docs/media/home-screen.png) |
-| **Procedures module** | ![Procedures](docs/media/tramites-screen.png) |
+| **Login screen** | ![Login](docs/media/login-screen.jpeg) |
+| **Main dashboard** | ![Dashboard](docs/media/home-screen.jpeg) |
+| **Procedures module** | ![Procedures](docs/media/tramites-screen.jpeg) |
 | **Chatbot in action** | ![Chatbot GIF](docs/media/chatbot-demo.gif) |
 
 ### 🔐 Features by role

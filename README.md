@@ -3,104 +3,86 @@
   <img src="https://img.shields.io/badge/Kotlin-0095D5?style=for-the-badge&logo=kotlin&logoColor=white" alt="Kotlin" />
   <img src="https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black" alt="Firebase" />
 
-  <h1>MiUNET App</h1>
+  <h1>📱 MiUNET App</h1>
   <p><strong>Plataforma integral universitaria para la UNET</strong></p>
 
   <a href="[ENLACE_DESCARGA_APK]" target="_blank">
-    <img src="https://img.shields.io/badge/Descargar_APK-000000?style=for-the-badge&logo=android&logoColor=3DDC84" alt="Descargar APK" />
+    <img src="https://img.shields.io/badge/⬇️_Descargar_APK-000000?style=for-the-badge&logo=android&logoColor=3DDC84" alt="Descargar APK" />
   </a>
 </div>
 
-## Tabla de contenido | Table of contents
+<br>
 
-- [Espanol](#espanol)
+## 🌍 Tabla de contenido | Table of contents
+
+- [Español](#español)
 - [English](#english)
 
 ---
 
-## Espanol
+## 🇪🇸 Español
 
-### Resumen del proyecto
+### 📝 Resumen del proyecto
 
-MiUNET es una aplicacion nativa Android para centralizar informacion academica e institucional de la Universidad Nacional Experimental del Tachira (UNET). Integra autenticacion por roles, contenido actualizado en tiempo real y herramientas de asistencia para estudiantes, profesores y personal administrativo.
+MiUNET es una aplicación nativa Android diseñada para centralizar la información académica e institucional de la Universidad Nacional Experimental del Táchira (UNET). Integra autenticación por roles, contenido sincronizado en tiempo real y herramientas de asistencia para estudiantes, profesores y personal administrativo.
 
-### Demo visual (premium)
+### 📱 Demo visual
 
-Reemplaza estos enlaces por tus recursos reales (capturas y GIFs):
-
-| Vista | Recurso |
+| Vista | Captura |
 |---|---|
-| Pantalla de login | ![Login](docs/media/login-screen.png) |
-| Dashboard principal | ![Dashboard](docs/media/home-screen.png) |
-| Modulo de tramites | ![Tramites](docs/media/tramites-screen.png) |
-| Chatbot en accion (GIF) | ![Chatbot GIF](docs/media/chatbot-demo.gif) |
+| **Pantalla de login** | ![Login](docs/media/login-screen.png) |
+| **Dashboard principal** | ![Dashboard](docs/media/home-screen.png) |
+| **Módulo de trámites** | ![Tramites](docs/media/tramites-screen.png) |
+| **Chatbot inteligente** | ![Chatbot GIF](docs/media/chatbot-demo.gif) |
 
-### Funcionalidades por rol
+### 🔐 Funcionalidades por rol
 
 | Feature | Estudiante | Profesor | Administrador |
 |---|---:|---:|---:|
-| Iniciar sesion seguro | Si | Si | Si |
-| Ver informacion institucional | Si | Si | Si |
-| Consultar chatbot academico | Si | Si | Si |
-| Gestionar perfil de usuario | Si | Si | Si |
-| Publicar o editar contenido | No | Limitado | Si |
-| Administrar modulos y datos | No | No | Si |
+| Iniciar sesión seguro | ✅ | ✅ | ✅ |
+| Ver información institucional | ✅ | ✅ | ✅ |
+| Consultar chatbot académico | ✅ | ✅ | ✅ |
+| Gestionar perfil de usuario | ✅ | ✅ | ✅ |
+| Publicar o editar contenido | ❌ | Limitado | ✅ |
+| Administrar módulos y datos | ❌ | ❌ | ✅ |
 
-### Impacto del proyecto (enfoque reclutador)
+### 📈 Impacto del proyecto
 
-Incluye tus resultados para reforzar CV/portafolio:
+- **Alcance estimado:** Diseñado para +[N] estudiantes.
+- **Eficiencia:** Ahorro promedio de [X] minutos por consulta administrativa.
+- **Optimización:** Reducción del [Y]% de los pasos necesarios para trámites frecuentes.
+- **Rendimiento:** Velocidad de carga percibida de [X] segundos en vistas principales gracias a la arquitectura NoSQL.
 
-- Alcance estimado: [N] estudiantes potenciales
-- Tiempo promedio ahorrado por consulta: [X] minutos
-- Reduccion de pasos para tramites frecuentes: [Y]%
-- Velocidad de carga percibida: [X] segundos en vistas principales
-- Modulos funcionales implementados: [N]
+### ⚙️ Logros técnicos
 
-### Logros tecnicos
+- Implementación de arquitectura cliente-servidor nativa con Firebase.
+- Integración de Firebase Authentication, Firestore y Storage.
+- Diseño de interfaz (UI) modular en XML con enfoque escalable (Material Design 3).
+- Separación funcional por Fragmentos para optimizar el mantenimiento del ciclo de vida de la app.
 
-- Implementacion de arquitectura cliente-servidor con Firebase
-- Integracion de Firebase Authentication, Firestore y Storage
-- Diseno de UI modular en XML con enfoque escalable
-- Separacion funcional por fragmentos para facilitar mantenimiento
-
-### Arquitectura
+### 🏗️ Arquitectura
 
 ```mermaid
 graph TD
-    A[MiUNET App Android Kotlin] <-->|Autenticacion y sincronizacion| B((Firebase))
+    A[📱 MiUNET App <br> Android Kotlin] <-->|Autenticación y sincronización| B((☁️ Firebase))
     B --> C[(Cloud Firestore)]
     B --> D[Firebase Authentication]
     B --> E[Firebase Storage]
 ```
 
-### Stack tecnologico
+### 🛠️ Stack tecnológico
 
-| Categoria | Tecnologia |
+| Categoría | Tecnología |
 |---|---|
-| Lenguaje | Kotlin |
-| IDE | Android Studio |
-| Base de datos | Firebase Cloud Firestore |
-| Autenticacion | Firebase Authentication |
-| UI | Material Design 3 + XML |
-| Arquitectura | Cliente-servidor |
-| Control de versiones | Git y GitHub |
+| **Lenguaje** | Kotlin |
+| **IDE** | Android Studio |
+| **Base de datos** | Firebase Cloud Firestore |
+| **Autenticación** | Firebase Authentication |
+| **UI** | Material Design 3 + XML |
+| **Arquitectura** | Cliente-servidor |
+| **Control de versiones** | Git y GitHub |
 
-### Estructura del proyecto
-
-```text
-MiUNET-APP/
-|- app/
-|  |- src/main/java/com/example/.../
-|  |- src/main/res/
-|  |- build.gradle.kts
-|  |- google-services.json
-|- gradle/
-|- build.gradle.kts
-|- settings.gradle.kts
-|- README.md
-```
-
-### Instalacion local
+### 💻 Instalación local
 
 1. Clona el repositorio:
 
@@ -109,114 +91,100 @@ git clone https://github.com/JuanD-2005/MiUNET.git
 ```
 
 2. Abre la carpeta en Android Studio y sincroniza Gradle.
-3. Agrega tu archivo google-services.json en app/.
-4. Ejecuta la configuracion app en emulador o dispositivo fisico.
+3. Agrega tu archivo `google-services.json` en el directorio `app/`.
+4. Ejecuta la configuración `app` en un emulador o dispositivo físico.
 
-### Compilacion CLI
+**Compilación CLI (Opcional):**
 
-Windows:
-
-```bash
-gradlew.bat assembleDebug
-```
-
-Linux/macOS:
-
-```bash
-./gradlew assembleDebug
-```
-
-APK generado en app/build/outputs/apk/debug/.
+- Windows: `gradlew.bat assembleDebug`
+- Linux/macOS: `./gradlew assembleDebug`
+  *(El APK se generará en `app/build/outputs/apk/debug/`)*
 
 ---
 
-## English
+## 🇺🇸 English
 
-### Project summary
+### 📝 Project summary
 
-MiUNET is a native Android app designed to centralize academic and institutional information for Universidad Nacional Experimental del Tachira (UNET). It provides role-based authentication, real-time synced content, and assistance tools for students, professors, and administrative staff.
+MiUNET is a native Android application designed to centralize academic and institutional information for the Universidad Nacional Experimental del Táchira (UNET). It provides role-based authentication, real-time synced content, and smart assistance tools for students, professors, and administrative staff.
 
-### Visual demo (premium)
-
-Replace these placeholders with your real screenshots and GIFs:
+### 📱 Visual demo
 
 | View | Asset |
 |---|---|
-| Login screen | ![Login](docs/media/login-screen.png) |
-| Main dashboard | ![Dashboard](docs/media/home-screen.png) |
-| Procedures module | ![Tramites](docs/media/tramites-screen.png) |
-| Chatbot in action (GIF) | ![Chatbot GIF](docs/media/chatbot-demo.gif) |
+| **Login screen** | ![Login](docs/media/login-screen.png) |
+| **Main dashboard** | ![Dashboard](docs/media/home-screen.png) |
+| **Procedures module** | ![Procedures](docs/media/tramites-screen.png) |
+| **Chatbot in action** | ![Chatbot GIF](docs/media/chatbot-demo.gif) |
 
-### Features by role
+### 🔐 Features by role
 
 | Feature | Student | Professor | Admin |
 |---|---:|---:|---:|
-| Secure sign-in | Yes | Yes | Yes |
-| View institutional information | Yes | Yes | Yes |
-| Use academic chatbot | Yes | Yes | Yes |
-| Manage personal profile | Yes | Yes | Yes |
-| Publish or edit content | No | Limited | Yes |
-| Manage modules and data | No | No | Yes |
+| Secure sign-in | ✅ | ✅ | ✅ |
+| View institutional info | ✅ | ✅ | ✅ |
+| Use academic chatbot | ✅ | ✅ | ✅ |
+| Manage personal profile | ✅ | ✅ | ✅ |
+| Publish or edit content | ❌ | Limited | ✅ |
+| Manage modules & data | ❌ | ❌ | ✅ |
 
-### Project impact (recruiter focus)
+### 📈 Project impact
 
-Add measurable outcomes to strengthen your portfolio:
+- **Potential reach:** Designed to support +[N] active students.
+- **Efficiency:** Average time saved per query is [X] minutes.
+- **Optimization:** [Y]% fewer steps required for frequent administrative procedures.
+- **Performance:** Perceived load speed of [X] seconds in core screens via NoSQL architecture.
 
-- Potential reach: [N] students
-- Average time saved per query: [X] minutes
-- Fewer steps in frequent procedures: [Y]%
-- Perceived load speed in core screens: [X] seconds
-- Functional modules delivered: [N]
+### ⚙️ Technical achievements
 
-### Technical achievements
+- Native client-server architecture built entirely with Firebase.
+- Seamless integration of Firebase Authentication, Firestore, and Storage.
+- Scalable XML UI implementation following Material Design 3 guidelines.
+- Fragment-based feature separation to ensure maintainability and proper lifecycle management.
 
-- Client-server architecture using Firebase
-- Firebase Authentication, Firestore, and Storage integration
-- Scalable XML UI implementation with modular structure
-- Fragment-based feature separation for maintainability
-
-### Architecture
+### 🏗️ Architecture
 
 ```mermaid
 graph TD
-    A[MiUNET App Android Kotlin] <-->|Authentication and sync| B((Firebase))
+    A[📱 MiUNET App <br> Android Kotlin] <-->|Authentication and sync| B((☁️ Firebase))
     B --> C[(Cloud Firestore)]
     B --> D[Firebase Authentication]
     B --> E[Firebase Storage]
 ```
 
-### Tech stack
+### 🛠️ Tech stack
 
 | Category | Technology |
 |---|---|
-| Language | Kotlin |
-| IDE | Android Studio |
-| Database | Firebase Cloud Firestore |
-| Authentication | Firebase Authentication |
-| UI | Material Design 3 + XML |
-| Architecture | Client-server |
-| Version control | Git and GitHub |
+| **Language** | Kotlin |
+| **IDE** | Android Studio |
+| **Database** | Firebase Cloud Firestore |
+| **Authentication** | Firebase Authentication |
+| **UI** | Material Design 3 + XML |
+| **Architecture** | Client-server |
+| **Version control** | Git and GitHub |
 
-### Local setup
+### 💻 Local setup
 
-1. Clone the repository.
+1. Clone the repository:
+
+```bash
+git clone https://github.com/JuanD-2005/MiUNET.git
+```
+
 2. Open it in Android Studio and sync Gradle.
-3. Add your google-services.json file into app/.
-4. Run app on an emulator or physical Android device.
-
-### APK download
-
-Update the [ENLACE_DESCARGA_APK] button at the top with your latest APK URL.
+3. Add your `google-services.json` file into the `app/` directory.
+4. Run the `app` configuration on an emulator or physical Android device.
 
 ---
 
-## Contribuciones | Contributing
+## 🤝 Contribuciones | Contributing
 
 1. Haz fork del repositorio / Fork this repository
-2. Crea una rama de trabajo / Create a feature branch
-3. Haz commits descriptivos / Write clear commits
+2. Crea una rama de trabajo / Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Haz commits descriptivos / Write clear commits (`git commit -m 'Add some AmazingFeature'`)
 4. Abre un Pull Request / Open a Pull Request
 
-## Licencia | License
+## 📄 Licencia | License
 
-Define aqui la licencia final (ejemplo: MIT) para aclarar uso y distribucion del proyecto.
+Distribuido bajo la licencia MIT. / Distributed under the MIT License.

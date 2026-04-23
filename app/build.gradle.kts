@@ -67,4 +67,9 @@ dependencies {
     implementation("com.google.android.material:material:1.12.0")
     implementation("com.google.firebase:firebase-auth:22.3.0")
 
+    // Cliente HTTP súper rápido
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    // Corrutinas para programación asíncrona
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
 }

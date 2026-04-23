@@ -1,1 +1,13 @@
 /build
+
+
+# Entornos virtuales
+venv/
+env/
+
+# Archivos de entorno (¡La llave secreta!)
+.env
+
+# Caché de Python
+__pycache__/
+*.pyc

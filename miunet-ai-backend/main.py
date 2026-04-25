@@ -16,6 +16,21 @@ if not api_key:
 else:
     genai.configure(api_key=api_key)
 
+# 1. Creamos el manual de empleado (System Instruction)
+instrucciones_unet = """
+Eres el Asistente Virtual Oficial de la UNET (Universidad Nacional Experimental del Táchira).
+Tu tono debe ser amable, respetuoso y útil, dirigiéndote a los estudiantes como 'Unetense'.
+
+Reglas estrictas:
+1. Solo respondes preguntas relacionadas con la UNET, ingeniería, o vida universitaria.
+2. Si te preguntan algo fuera de estos temas, responde amablemente que tu función es estrictamente académica.
+
+Datos base de la UNET (Usa esto para responder):
+- La biblioteca atiende de 7:30 AM a 12:00 PM.
+- El comedor está ubicado subiendo en el camino derecho de los auditorios.
+- Control de Estudios queda en el piso 1 del edificio Administrativo.
+"""
+
 # Definimos la estructura exacta que esperamos recibir desde Kotlin
 class ChatRequest(BaseModel):
     pregunta: str
@@ -30,10 +45,10 @@ async def chat_con_gemini(request: ChatRequest):
         raise HTTPException(status_code=400, detail="La pregunta no puede estar vacía.")
 
     try:
-        # Configuramos el modelo y su "personalidad"
+        # 2. Inicializamos el modelo inyectándole el manual (System Prompt)
         model = genai.GenerativeModel(
-                    model_name="gemini-2.5-flash",  # <--- NUEVO MOTOR V8 INSTALADO
-                    system_instruction="Eres el asistente virtual no oficial de la UNET. Tu tono es útil, directo y amigable con los estudiantes de ingeniería. Responde de forma concisa."
+            model_name="gemini-1.5-flash",
+            system_instruction=instrucciones_unet
         )
 
         # Enviamos la pregunta a la IA
@@ -43,6 +58,6 @@ async def chat_con_gemini(request: ChatRequest):
         return {"respuesta": response.text}
 
     except Exception as e:
-            error_real = str(e)
-            print(f"Error crítico en el servidor: {error_real}")
-            raise HTTPException(status_code=500, detail=f"Error técnico de Google: {error_real}")
+        error_real = str(e)
+        print(f"Error crítico en el servidor: {error_real}")
+        raise HTTPException(status_code=500, detail=f"Error técnico de Google: {error_real}")

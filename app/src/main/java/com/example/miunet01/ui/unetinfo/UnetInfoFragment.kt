@@ -1,7 +1,10 @@
 package com.example.miunet01.ui.unetinfo
 
 import android.app.AlertDialog
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -14,7 +17,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.miunet01.R
 import com.example.miunet01.databinding.FragmentUnetInfoBinding
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.QuerySnapshot
+import java.text.SimpleDateFormat
 import java.util.*
 
 class UnetInfoFragment : Fragment() {
@@ -23,20 +28,20 @@ class UnetInfoFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var db: FirebaseFirestore
-    private lateinit var userRole: String  // 🔹 ahora es global
+    private lateinit var userRole: String
 
     private val listaEventos = mutableListOf<Evento>()
-    private val listaHorarios = mutableListOf<Horario>()
     private lateinit var adapterEventos: EventosAdapter
-    private lateinit var adapterHorarios: HorariosAdapter
+
+    // Variables para el control del reloj en tiempo real
+    private var snapshotListener: ListenerRegistration? = null
+    private var countDownTimer: CountDownTimer? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentUnetInfoBinding.inflate(inflater, container, false)
-        val view = binding.root
-
         db = FirebaseFirestore.getInstance()
 
         // 🔹 Recuperar el rol globalmente
@@ -44,86 +49,116 @@ class UnetInfoFragment : Fragment() {
         userRole = prefs.getString("USER_ROLE", "Estudiante") ?: "Estudiante"
         Log.d("ROLE_DEBUG", "Rol recibido en UnetInfoFragment (SharedPrefs): $userRole")
 
-        // 🔹 Mostrar el botón solo si es Admin
+        // 🔹 Mostrar controles de Admin
         if (userRole == "Admin") {
             binding.btnAgregarEvento.visibility = View.VISIBLE
+
+            // Truco UI: El Admin puede tocar el área del reloj para editarlo
+            binding.imgSection.isClickable = true
+            binding.imgSection.setOnClickListener {
+                mostrarDialogoEditarSemestre()
+            }
         } else {
             binding.btnAgregarEvento.visibility = View.GONE
+            binding.imgSection.isClickable = false
         }
 
-        // 🔹 Configurar RecyclerViews
+        // 🔹 Configurar RecyclerView (con tu optimización para NestedScrollView)
         adapterEventos = EventosAdapter(listaEventos, userRole) { evento ->
             mostrarDialogoEditarEvento(evento)
         }
-        adapterHorarios = HorariosAdapter(listaHorarios)
-
-        binding.recyclerEventos.layoutManager = LinearLayoutManager(requireContext())
-        binding.recyclerEventos.adapter = adapterEventos
-
-
+        setupRecyclerView()
 
         // 🔹 Cargar datos desde Firestore
         cargarEventos()
+
+        // 🔹 Iniciar escucha del reloj en tiempo real
+        escucharConfiguracionSemestre()
 
         // 🔹 Acción del botón (solo visible para Admin)
         binding.btnAgregarEvento.setOnClickListener {
             mostrarDialogoAgregarEvento()
         }
 
+        setupWelcomeMessage()
 
-        // Definimos la fecha objetivo: 10 de noviembre de 2025, 00:00:00
-        val fechaObjetivo = Calendar.getInstance().apply {
-            set(2025, Calendar.NOVEMBER, 10, 0, 0, 0)
-        }.timeInMillis
+        return binding.root
+    }
 
+    // --- 🔹 NUEVO: Lógica del Reloj Dinámico con Firestore ---
+    private fun escucharConfiguracionSemestre() {
+        val docRef = db.collection("configuracion").document("semestre")
+
+        snapshotListener = docRef.addSnapshotListener { snapshot, e ->
+            if (e != null || _binding == null) {
+                binding.txtFechaObjetivo.text = "Error al conectar 😅"
+                return@addSnapshotListener
+            }
+
+            if (snapshot != null && snapshot.exists()) {
+                val fechaInicio = snapshot.getTimestamp("fecha_inicio")?.toDate()
+                val nombreSemestre = snapshot.getString("nombre_semestre") ?: ""
+
+                if (fechaInicio != null) {
+                    binding.txtTituloCuentaRegresiva.text = "⏳ Inicio del Semestre $nombreSemestre:"
+
+                    val formatoFecha = SimpleDateFormat("dd 'de' MMMM 'de' yyyy", Locale("es", "ES"))
+                    binding.txtFechaObjetivo.text = formatoFecha.format(fechaInicio)
+
+                    iniciarContador(fechaInicio)
+                }
+            } else {
+                binding.txtFechaObjetivo.text = "Fecha no configurada en BD"
+            }
+        }
+    }
+
+    private fun iniciarContador(fechaObjetivo: Date) {
+        countDownTimer?.cancel()
+
+        // Aseguramos que la vista siga existiendo antes de actualizar UI
+        if (_binding == null) return
+
+        val tiempoRestante = fechaObjetivo.time - System.currentTimeMillis()
         val textCuenta = binding.txtCuentaRegresiva
-        val handler = android.os.Handler()
 
-        val runnable = object : Runnable {
-            override fun run() {
-                val ahora = System.currentTimeMillis()
-                val diferencia = fechaObjetivo - ahora
+        if (tiempoRestante > 0) {
+            countDownTimer = object : CountDownTimer(tiempoRestante, 1000) {
+                override fun onTick(millisUntilFinished: Long) {
+                    if (_binding == null) return // Prevenir crash si el fragment se cierra
 
-                if (diferencia > 0) {
-                    val dias = diferencia / (1000 * 60 * 60 * 24)
-                    val horas = (diferencia / (1000 * 60 * 60)) % 24
-                    val minutos = (diferencia / (1000 * 60)) % 60
-                    val segundos = (diferencia / 1000) % 60
+                    val dias = millisUntilFinished / (1000 * 60 * 60 * 24)
+                    val horas = (millisUntilFinished / (1000 * 60 * 60)) % 24
+                    val minutos = (millisUntilFinished / 1000 / 60) % 60
+                    val segundos = (millisUntilFinished / 1000) % 60
 
-                    val texto = String.format(
+                    textCuenta.text = String.format(
                         Locale.getDefault(),
                         "%02dd %02dh %02dm %02ds",
                         dias, horas, minutos, segundos
                     )
-
-                    textCuenta.text = texto
-                    handler.postDelayed(this, 1000)
-                } else {
-                    textCuenta.text = "¡El semestre ha comenzado! 🎓"
                 }
-            }
+
+                override fun onFinish() {
+                    if (_binding != null) {
+                        textCuenta.text = "¡El semestre ha comenzado! 🎓"
+                    }
+                }
+            }.start()
+        } else {
+            textCuenta.text = "¡El semestre ha comenzado! 🎓"
         }
-
-// Iniciar el contador
-        handler.post(runnable)
-
-        setupWelcomeMessage()
-
-        return view
     }
 
-    // En tu Activity o Fragment
+    // --- 🔹 Configuración de Vistas Original ---
     private fun setupRecyclerView() {
         binding.recyclerEventos.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = adapterEventos
-            // Esto ayuda con el rendimiento en NestedScrollView
             setHasFixedSize(false)
-            isNestedScrollingEnabled = false  // 👈 Importante para smooth scrolling
+            isNestedScrollingEnabled = false
         }
     }
-
-
 
     private fun setupWelcomeMessage() {
         val saludo = when (Calendar.getInstance().get(Calendar.HOUR_OF_DAY)) {
@@ -134,8 +169,26 @@ class UnetInfoFragment : Fragment() {
         binding.tvBienvenida.text = saludo
     }
 
+    // --- 🔹 Operaciones de Base de Datos Originales ---
+    private fun cargarEventos() {
+        db.collection("eventos")
+            .get()
+            .addOnSuccessListener { result: QuerySnapshot ->
+                listaEventos.clear()
+                for (document in result) {
+                    val evento = document.toObject(Evento::class.java)
+                    evento.id = document.id
+                    listaEventos.add(evento)
+                }
+                adapterEventos.actualizarLista(listaEventos)
+            }
+            .addOnFailureListener { e: Exception ->
+                if (_binding != null) {
+                    Toast.makeText(requireContext(), "Error al cargar eventos: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+            }
+    }
 
-    // --- 🔹 Diálogo para agregar eventos ---
     private fun mostrarDialogoAgregarEvento() {
         val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_agregar_evento, null)
         val titulo = dialogView.findViewById<EditText>(R.id.editTitulo)
@@ -168,7 +221,6 @@ class UnetInfoFragment : Fragment() {
             .show()
     }
 
-    // --- 🔹 Diálogo para editar eventos ---
     private fun mostrarDialogoEditarEvento(evento: Evento) {
         val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_agregar_evento, null)
         val titulo = dialogView.findViewById<EditText>(R.id.editTitulo)
@@ -202,15 +254,12 @@ class UnetInfoFragment : Fragment() {
                         Toast.makeText(requireContext(), "Error al actualizar: ${e.message}", Toast.LENGTH_SHORT).show()
                     }
             }
-
             .setNeutralButton("Eliminar") { _, _ ->
                 confirmarEliminacionEvento(evento)
             }
-
             .setNegativeButton("Cancelar", null)
             .show()
     }
-
 
     private fun confirmarEliminacionEvento(evento: Evento) {
         AlertDialog.Builder(requireContext())
@@ -225,7 +274,6 @@ class UnetInfoFragment : Fragment() {
                             listaEventos.removeAt(index)
                             adapterEventos.notifyItemRemoved(index)
 
-                            // 🔹 Animación de salida
                             binding.recyclerEventos.layoutAnimation =
                                 android.view.animation.AnimationUtils.loadLayoutAnimation(
                                     requireContext(),
@@ -233,7 +281,6 @@ class UnetInfoFragment : Fragment() {
                                 )
                             binding.recyclerEventos.scheduleLayoutAnimation()
                         }
-
                         Toast.makeText(requireContext(), "Evento eliminado", Toast.LENGTH_SHORT).show()
                     }
                     .addOnFailureListener { e ->
@@ -244,35 +291,75 @@ class UnetInfoFragment : Fragment() {
             .show()
     }
 
+    // --- 🔹 PANEL ADMIN: Editar Semestre ---
+    private fun mostrarDialogoEditarSemestre() {
+        val calendario = Calendar.getInstance()
 
+        // 1. Mostrar Selector de Fecha
+        DatePickerDialog(requireContext(), { _, anio, mes, dia ->
+            calendario.set(Calendar.YEAR, anio)
+            calendario.set(Calendar.MONTH, mes)
+            calendario.set(Calendar.DAY_OF_MONTH, dia)
 
+            // 2. Mostrar Selector de Hora inmediatamente después
+            TimePickerDialog(requireContext(), { _, hora, minuto ->
+                calendario.set(Calendar.HOUR_OF_DAY, hora)
+                calendario.set(Calendar.MINUTE, minuto)
+                calendario.set(Calendar.SECOND, 0)
 
-    // --- 🔹 Cargar eventos desde Firebase ---
-    private fun cargarEventos() {
-        db.collection("eventos")
-            .get()
-            .addOnSuccessListener { result: QuerySnapshot ->
-                listaEventos.clear()
-                for (document in result) {
-                    val evento = document.toObject(Evento::class.java)
-                    evento.id = document.id
-                    listaEventos.add(evento)
-                }
+                // 3. Pedir el nombre del semestre
+                pedirNombreSemestre(calendario.time)
 
-                adapterEventos.actualizarLista(listaEventos)
-            }
-            .addOnFailureListener { e: Exception ->
-                Toast.makeText(requireContext(), "Error al cargar eventos: ${e.message}", Toast.LENGTH_SHORT).show()
-            }
+            }, calendario.get(Calendar.HOUR_OF_DAY), calendario.get(Calendar.MINUTE), false).show()
+
+        }, calendario.get(Calendar.YEAR), calendario.get(Calendar.MONTH), calendario.get(Calendar.DAY_OF_MONTH)).show()
     }
 
+    private fun pedirNombreSemestre(nuevaFecha: Date) {
+        val input = EditText(requireContext()).apply {
+            hint = "Ejemplo: 2026-I o B-2026"
+            setPadding(50, 40, 50, 40)
+        }
+
+        AlertDialog.Builder(requireContext())
+            .setTitle("Nombre del Semestre")
+            .setMessage("Define cómo se llamará este nuevo periodo:")
+            .setView(input)
+            .setPositiveButton("Actualizar") { _, _ ->
+                val nombre = input.text.toString().trim()
+                if (nombre.isNotEmpty()) {
+                    guardarSemestreEnNube(nuevaFecha, nombre)
+                } else {
+                    Toast.makeText(requireContext(), "El nombre no puede estar vacío", Toast.LENGTH_SHORT).show()
+                }
+            }
+            .setNegativeButton("Cancelar", null)
+            .show()
+    }
+
+    private fun guardarSemestreEnNube(fecha: Date, nombre: String) {
+        val datosSemestre = hashMapOf(
+            "fecha_inicio" to com.google.firebase.Timestamp(fecha),
+            "nombre_semestre" to nombre
+        )
+
+        // Hacemos update al documento único de configuración
+        db.collection("configuracion").document("semestre")
+            .set(datosSemestre)
+            .addOnSuccessListener {
+                Toast.makeText(requireContext(), "¡Reloj actualizado para toda la UNET!", Toast.LENGTH_LONG).show()
+                // Nota: No necesitamos llamar a iniciarContador() porque el addSnapshotListener 
+                // que creamos antes detectará este cambio en la BD y actualizará la UI automáticamente.
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(requireContext(), "Error al actualizar: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
+        snapshotListener?.remove()
+        countDownTimer?.cancel()
         _binding = null
     }
 }
-
-
-
-

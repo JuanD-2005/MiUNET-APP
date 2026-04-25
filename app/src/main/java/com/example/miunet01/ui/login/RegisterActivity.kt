@@ -3,6 +3,7 @@ package com.example.miunet01.ui.login
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.miunet01.R
@@ -33,13 +34,29 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun setupSpinner() {
-        // Configurar el AutoCompleteTextView para roles
-        val roles = arrayOf("Estudiante", "Profesor", "Admin")
+        // Configurar el AutoCompleteTextView para roles desde strings.xml
+        val roles = resources.getStringArray(R.array.roles_array)
         val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, roles)
         binding.spinnerRole.setAdapter(adapter)
 
         // Establecer un valor por defecto
         binding.spinnerRole.setText("Estudiante", false)
+
+        // 1. Mostrar/Ocultar el campo de PIN dinámicamente
+        binding.spinnerRole.setOnItemClickListener { parent, _, position, _ ->
+            val rolSeleccionado = parent.getItemAtPosition(position).toString()
+
+            if (rolSeleccionado == "Profesor") {
+                // Animación suave de entrada
+                binding.layoutPinProfesor.alpha = 0f
+                binding.layoutPinProfesor.visibility = View.VISIBLE
+                binding.layoutPinProfesor.animate().alpha(1f).setDuration(300).start()
+            } else {
+                binding.layoutPinProfesor.visibility = View.GONE
+                binding.editPinProfesor.text?.clear() // Limpiamos si se arrepiente y vuelve a Estudiante
+                binding.layoutPinProfesor.error = null
+            }
+        }
     }
 
     private fun setupClickListeners() {
@@ -56,13 +73,14 @@ class RegisterActivity : AppCompatActivity() {
         val email = binding.editEmail.text.toString().trim()
         val password = binding.editPassword.text.toString().trim()
         val role = binding.spinnerRole.text.toString().trim()
+        val pin = binding.editPinProfesor.text.toString().trim()
 
-        if (isValidForm(email, password, role)) {
+        if (isValidForm(email, password, role, pin)) {
             registerUser(email, password, role)
         }
     }
 
-    private fun isValidForm(email: String, password: String, role: String): Boolean {
+    private fun isValidForm(email: String, password: String, role: String, pin: String): Boolean {
         var isValid = true
 
         // Validar email
@@ -91,15 +109,29 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         // Validar rol
-        val validRoles = listOf("Estudiante", "Profesor", "Admin")
+        val rolesArray = resources.getStringArray(R.array.roles_array)
         if (role.isEmpty()) {
             binding.spinnerRole.error = "Seleccione un rol"
             isValid = false
-        } else if (!validRoles.contains(role)) {
+        } else if (!rolesArray.contains(role)) {
             binding.spinnerRole.error = "Rol inválido"
             isValid = false
         } else {
             binding.spinnerRole.error = null
+        }
+
+        // 🛡️ EL BLINDAJE DEL PIN (Solo si eligió Profesor)
+        if (role == "Profesor") {
+            val PIN_SECRETO = "UNET-2026-PROFE"
+
+            if (pin != PIN_SECRETO) {
+                binding.layoutPinProfesor.error = "PIN inválido o vacío"
+                binding.editPinProfesor.requestFocus()
+                showToast("Acceso denegado. No eres el profesor Oak.")
+                isValid = false
+            } else {
+                binding.layoutPinProfesor.error = null // Limpiar error si está bien
+            }
         }
 
         return isValid

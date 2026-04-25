@@ -1,12 +1,13 @@
 package com.example.miunet01.ui.chatbot
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -44,7 +45,6 @@ class ChatbotFragment : Fragment() {
         agregarMensaje("¡Hola! 👋 Soy el asistente inteligente de MiUNET.\nPuedes preguntarme sobre los servicios, departamentos o trámites de la UNET.", false)
 
         // --- SUGERENCIAS FRECUENTES PARA EL CHATBOT ---
-        // Al usar IA, dejamos las preguntas más comunes como sugerencias iniciales
         val sugerenciasBase = listOf(
             "¿Dónde queda el comedor?",
             "Horario del cafetín del A",
@@ -58,35 +58,42 @@ class ChatbotFragment : Fragment() {
             "¿Retirar materias afecta el índice?"
         ).sorted()
 
-        // 3️⃣ Adaptador de autocompletado
+        // Adaptador nativo de Android
         val adapterSugerencias = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, sugerenciasBase)
-
-        // 4️⃣ Configuramos el AutoCompleteTextView
         val inputAuto = binding.inputMensaje as AutoCompleteTextView
-        inputAuto.setAdapter(adapterSugerencias)
-        inputAuto.threshold = 1 // Mostrar desde el primer carácter
 
-        // 5️⃣ Mostrar sugerencias al enfocar
+        inputAuto.setAdapter(adapterSugerencias)
+        inputAuto.threshold = 1 // Mostrar desde la primera letra
+
+        // Mostrar lista al tocar la caja
         inputAuto.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) inputAuto.showDropDown()
         }
 
-        // 6️⃣ Refrescar sugerencias mientras el usuario escribe
-        inputAuto.addTextChangedListener { editable ->
-            val texto = editable?.toString()?.lowercase()?.trim() ?: ""
-            val filtradas = sugerenciasBase.filter { it.lowercase().contains(texto) }
-            adapterSugerencias.clear()
-            adapterSugerencias.addAll(filtradas)
-            adapterSugerencias.notifyDataSetChanged()
-            if (filtradas.isNotEmpty()) inputAuto.showDropDown()
+        // Enviar la pregunta automáticamente al tocar la sugerencia
+        inputAuto.setOnItemClickListener { parent, _, position, _ ->
+            val preguntaSeleccionada = parent.getItemAtPosition(position).toString()
+            agregarMensaje(preguntaSeleccionada, true)
+            binding.inputMensaje.text?.clear()
+            
+            // Ocultar el teclado suavemente
+            val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(binding.root.windowToken, 0)
+            
+            responder(preguntaSeleccionada)
         }
 
-        // 🔹 Enviar mensaje
+        // 🔹 Enviar mensaje (Botón manual)
         binding.btnEnviar.setOnClickListener {
             val pregunta = binding.inputMensaje.text.toString().trim()
             if (pregunta.isNotEmpty()) {
                 agregarMensaje(pregunta, true)
                 binding.inputMensaje.text?.clear()
+
+                // Ocultar el teclado suavemente
+                val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(binding.root.windowToken, 0)
+
                 responder(pregunta)
             } else {
                 Snackbar.make(binding.root, "Escribe una pregunta antes de enviar ✍️", Snackbar.LENGTH_SHORT).show()
@@ -100,7 +107,7 @@ class ChatbotFragment : Fragment() {
     private fun agregarMensaje(texto: String, esUsuario: Boolean) {
         mensajes.add(Mensaje(texto, esUsuario))
         adapter.notifyItemInserted(mensajes.size - 1)
-        binding.recyclerChat.scrollToPosition(mensajes.size - 1)
+        binding.recyclerChat.smoothScrollToPosition(mensajes.size - 1)
     }
 
     // 🔹 Generar respuesta conectando con Gemini vía FastAPI
@@ -119,9 +126,9 @@ class ChatbotFragment : Fragment() {
                 val mediaType = "application/json; charset=utf-8".toMediaType()
                 val requestBody = jsonBody.toRequestBody(mediaType)
 
-                // Apuntamos al servidor de Python (10.0.2.2 es el localhost del emulador de Android)
+                // Apuntamos al servidor de producción en Render
                 val request = Request.Builder()
-                    .url("http://10.0.2.2:8000/api/chat")
+                    .url("https://miunet-app.onrender.com/api/chat")
                     .post(requestBody)
                     .build()
 
@@ -136,8 +143,10 @@ class ChatbotFragment : Fragment() {
 
                     // Volvemos al hilo principal (UI) para actualizar la pantalla
                     withContext(Dispatchers.Main) {
-                        mensajes.removeAt(mensajes.size - 1)
-                        adapter.notifyItemRemoved(mensajes.size)
+                        if (mensajes.isNotEmpty() && mensajes.last().texto == "🤔 Pensando...") {
+                            mensajes.removeAt(mensajes.size - 1)
+                            adapter.notifyItemRemoved(mensajes.size)
+                        }
                         agregarMensaje(respuestaIA, false)
                     }
                 } else {

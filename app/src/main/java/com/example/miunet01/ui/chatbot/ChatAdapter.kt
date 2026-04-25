@@ -1,8 +1,10 @@
 package com.example.miunet01.ui.chatbot
 
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.miunet01.R
@@ -25,16 +27,21 @@ class ChatAdapter(private val mensajes: List<Mensaje>) :
 
     inner class MensajeViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val txtMensaje: TextView = view.findViewById(R.id.txtMensaje)
+        private val messageContainer: LinearLayout = view.findViewById(R.id.messageContainer)
 
         fun bind(mensaje: Mensaje) {
             txtMensaje.text = mensaje.texto
 
             if (mensaje.esUsuario) {
+                // 🔹 MENSAJE DEL ESTUDIANTE (Derecha, Azul, Texto Blanco)
+                messageContainer.gravity = Gravity.END
                 txtMensaje.setBackgroundResource(R.drawable.bg_mensaje_usuario)
-                txtMensaje.textAlignment = View.TEXT_ALIGNMENT_TEXT_END
+                txtMensaje.setTextColor(android.graphics.Color.WHITE)
             } else {
+                // 🔹 MENSAJE DE LA IA (Izquierda, Gris/Blanco, Texto Negro)
+                messageContainer.gravity = Gravity.START
                 txtMensaje.setBackgroundResource(R.drawable.bg_mensaje_bot)
-                txtMensaje.textAlignment = View.TEXT_ALIGNMENT_TEXT_START
+                txtMensaje.setTextColor(android.graphics.Color.BLACK)
             }
         }
     }

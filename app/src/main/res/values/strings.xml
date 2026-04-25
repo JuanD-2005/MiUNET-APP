@@ -7,7 +7,6 @@
     <string-array name="roles_array">
         <item>Estudiante</item>
         <item>Profesor</item>
-        <item>Admin</item>
     </string-array>
 
 </resources>

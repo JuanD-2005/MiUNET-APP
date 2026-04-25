@@ -19,24 +19,22 @@ else:
 # --- 🔹 RAG NIVEL 2: Bóveda de Conocimiento ---
 
 def cargar_documentos_unet():
-    """Lee todos los archivos .md de la carpeta conocimiento_unet"""
     conocimiento = ""
-    # Ruta relativa al directorio del script
-    base_dir = os.path.dirname(os.path.abspath(__file__))
-    carpeta = os.path.join(base_dir, "conocimiento_unet")
+    # 🔹 TRUCO PRO: Forzamos a Python a buscar la carpeta exactamente donde está este archivo main.py
+    directorio_actual = os.path.dirname(os.path.abspath(__file__))
+    carpeta = os.path.join(directorio_actual, "conocimiento_unet")
     
     if os.path.exists(carpeta):
         for archivo in os.listdir(carpeta):
             if archivo.endswith(".md"):
-                try:
-                    with open(os.path.join(carpeta, archivo), "r", encoding="utf-8") as f:
-                        conocimiento += f"\n\n--- INICIO DEL DOCUMENTO: {archivo} ---\n\n"
-                        conocimiento += f.read()
-                        conocimiento += f"\n\n--- FIN DEL DOCUMENTO: {archivo} ---\n\n"
-                except Exception as e:
-                    print(f"Error leyendo {archivo}: {e}")
+                ruta_completa = os.path.join(carpeta, archivo)
+                with open(ruta_completa, "r", encoding="utf-8") as f:
+                    conocimiento += f"\n\n--- INICIO DEL DOCUMENTO: {archivo} ---\n\n"
+                    conocimiento += f.read()
+                    conocimiento += f"\n\n--- FIN DEL DOCUMENTO: {archivo} ---\n\n"
     else:
-        print(f"⚠️ La carpeta {carpeta} no existe.")
+        print(f"⚠️ ALERTA: No se encontró la carpeta en: {carpeta}") # Esto saldrá en los logs de Render
+        
     return conocimiento
 
 # Construimos la instrucción maestra dinámica

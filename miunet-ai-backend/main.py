@@ -67,7 +67,7 @@ async def chat_con_gemini(request: ChatRequest):
 
         # Inicializamos el modelo con el "súper cerebro" inyectado
         model = genai.GenerativeModel(
-            model_name="gemini-1.5-flash",
+            model_name="gemini-2.5-flash",
             system_instruction=instrucciones_completas
         )
 

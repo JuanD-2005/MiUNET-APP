@@ -16,19 +16,37 @@ if not api_key:
 else:
     genai.configure(api_key=api_key)
 
-# 1. Creamos el manual de empleado (System Instruction)
-instrucciones_unet = """
-Eres el Asistente Virtual Oficial de la UNET (Universidad Nacional Experimental del Táchira).
-Tu tono debe ser amable, respetuoso y útil, dirigiéndote a los estudiantes como 'Unetense'.
+# --- 🔹 RAG NIVEL 2: Bóveda de Conocimiento ---
 
-Reglas estrictas:
-1. Solo respondes preguntas relacionadas con la UNET, ingeniería, o vida universitaria.
-2. Si te preguntan algo fuera de estos temas, responde amablemente que tu función es estrictamente académica.
+def cargar_documentos_unet():
+    """Lee todos los archivos .md de la carpeta conocimiento_unet"""
+    conocimiento = ""
+    # Ruta relativa al directorio del script
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    carpeta = os.path.join(base_dir, "conocimiento_unet")
+    
+    if os.path.exists(carpeta):
+        for archivo in os.listdir(carpeta):
+            if archivo.endswith(".md"):
+                try:
+                    with open(os.path.join(carpeta, archivo), "r", encoding="utf-8") as f:
+                        conocimiento += f"\n\n--- INICIO DEL DOCUMENTO: {archivo} ---\n\n"
+                        conocimiento += f.read()
+                        conocimiento += f"\n\n--- FIN DEL DOCUMENTO: {archivo} ---\n\n"
+                except Exception as e:
+                    print(f"Error leyendo {archivo}: {e}")
+    else:
+        print(f"⚠️ La carpeta {carpeta} no existe.")
+    return conocimiento
 
-Datos base de la UNET (Usa esto para responder):
-- La biblioteca atiende de 7:30 AM a 12:00 PM.
-- El comedor está ubicado subiendo en el camino derecho de los auditorios.
-- Control de Estudios queda en el piso 1 del edificio Administrativo.
+# Construimos la instrucción maestra dinámica
+base_prompt = """Eres el Asistente Virtual Oficial de la UNET (Universidad Nacional Experimental del Táchira).
+Dirígete a los estudiantes de manera amable, respetuosa y útil, llamándolos 'Inge' o 'compañero'.
+
+REGLA ESTRICTA: Responde ÚNICAMENTE basándote en los documentos oficiales proporcionados a continuación. 
+Si el estudiante pregunta algo que no está en estos documentos, responde: "Aún no tengo esa información en mi base de datos oficial de la UNET, te recomiendo consultar directamente en el departamento correspondiente."
+
+A continuación, la información oficial de la UNET:
 """
 
 # Definimos la estructura exacta que esperamos recibir desde Kotlin
@@ -45,10 +63,14 @@ async def chat_con_gemini(request: ChatRequest):
         raise HTTPException(status_code=400, detail="La pregunta no puede estar vacía.")
 
     try:
-        # 2. Inicializamos el modelo inyectándole el manual (System Prompt)
+        # Cargamos el conocimiento actualizado en cada consulta (o podrías hacerlo global)
+        conocimiento_actualizado = cargar_documentos_unet()
+        instrucciones_completas = base_prompt + conocimiento_actualizado
+
+        # Inicializamos el modelo con el "súper cerebro" inyectado
         model = genai.GenerativeModel(
             model_name="gemini-1.5-flash",
-            system_instruction=instrucciones_unet
+            system_instruction=instrucciones_completas
         )
 
         # Enviamos la pregunta a la IA
